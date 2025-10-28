@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="pt-br" xmlns:th="http://www.thymeleaf.org">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Motos a trabalhar</title>
+    <link
+      href="https://cdn.jsdelivr.net/npm/daisyui@5"
+      rel="stylesheet"
+      type="text/css"
+    />
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link
+      href="https://cdn.jsdelivr.net/npm/daisyui@5/themes.css"
+      rel="stylesheet"
+      type="text/css"
+    />
+  </head>
+  <body class="bg-stone-950 min-h-screen flex flex-col items-center">
+  <dialog id="loading_modal" class="modal">
+    <div class="modal-box bg-stone-800 text-white p-6 max-w-sm mx-auto">
+      <h3 class="font-bold text-lg mb-4 text-center">Carregando moto</h3>
+      <div class="flex justify-center mb-4">
+        <div class="loading loading-spinner loading-lg text-lime-500"></div>
+      </div>
+      <p class="text-center">Localizando a moto no pátio...</p>
+    </div>
+    <form method="dialog" class="modal-backdrop">
+      <button>Fechar</button>
+    </form>
+  </dialog>
+
+  <header
+          class="fixed top-0 left-0 w-full bg-stone-900 flex flex-wrap justify-around py-4 z-10 shadow"
+  >
+      <a
+        href="/home"
+        class="text-lg text-white font-bold hover:text-lime-600 transition"
+        >Início</a
+      >
+      <a
+        href="/motos"
+        class="text-lg text-lime-500 font-bold hover:text-lime-500 transition"
+        >Motos</a
+      >
+      <a
+        href="/echobeacon"
+        class="text-lg text-white font-bold hover:text-lime-500 transition"
+        >Echo Beacons</a
+      >
+      <a
+        href="/profile"
+        class="text-lg text-white font-bold hover:text-lime-500 transition"
+        >Perfil</a
+      >
+    </header>
+  <main class="w-full max-w-xs mx-auto pt-32 pb-12 flex-grow">
+      <h1 id="titulo-motos" class="text-2xl font-bold text-white mb-6 text-center">
+        Motos a trabalhar
+      </h1>
+
+      <section class="mb-8">
+        <a
+          id="btn-adicionar-moto"
+          href="/motos/novo"
+          class="w-full py-2 mb-4 rounded-full bg-lime-500 text-black font-bold text-lg hover:bg-lime-600 transition text-center block"
+        >
+          Adicionar Moto
+        </a>
+      </section>
+
+      <section class="mb-8">
+        <div class="bg-stone-800 rounded-t-lg px-4 py-2">
+          <span id="secao-recepcao" class="text-white font-bold text-lg"
+            >Na recepção/ pendente</span
+          >
+        </div>
+        <div class="space-y-4 bg-stone-900 px-4 py-4 rounded-b-lg">
+          <div
+            th:each="moto : ${motosRecepcao}"
+            class="bg-stone-700 rounded-lg p-4"
+          >
+            <div class="flex items-center justify-between mb-2">
+              <div>
+                <div
+                  class="text-white font-bold text-base"
+                  th:text="${moto.modelo}"
+                >
+                  Modelo
+                </div>
+                <div class="text-white text-sm" th:text="${moto.placa}">
+                  Placa
+                </div>
+                <div class="text-white text-sm" th:text="${moto.chassi}">
+                  Chassi
+                </div>
+                <div class="text-gray-300 text-sm" th:text="${moto.problema}">
+                  Problema
+                </div>
+              </div>
+              <a th:href="@{/echobeacon}" class="text-white text-2xl hover:text-lime-500 transition">+</a>
+            </div>
+
+            <!-- Opções de Admin -->
+            <div th:if="${isAdmin}" class="flex gap-2 mt-2 justify-end">
+              <a th:href="@{/motos/editar/{id}(id=${moto.id})}"
+                 class="text-xs bg-blue-600 hover:bg-blue-700 text-white py-1 px-2 rounded transition">
+                Editar
+              </a>
+              <a th:href="@{/motos/excluir/{id}(id=${moto.id})}"
+                 class="text-xs bg-red-600 hover:bg-red-700 text-white py-1 px-2 rounded transition"
+                 onclick="return confirm('Tem certeza que deseja excluir esta moto?')">
+                Excluir
+              </a>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section>
+        <div class="bg-stone-800 rounded-t-lg px-4 py-2">
+          <span id="secao-patio" class="text-white font-bold text-lg">No pátio</span>
+        </div>
+        <div class="space-y-4 bg-stone-900 px-4 py-4 rounded-b-lg">
+          <div
+            th:each="moto : ${motosPatio}"
+            class="bg-stone-700 rounded-lg p-4"
+          >
+            <div class="flex items-center justify-between mb-2">
+              <div>
+                <div
+                  class="text-white font-bold text-base"
+                  th:text="${moto.modelo}"
+                >
+                  Modelo
+                </div>
+                <div class="text-white text-sm" th:text="${moto.placa}">
+                  Placa
+                </div>
+                <div class="text-white text-sm" th:text="${moto.chassi}">
+                  Chassi
+                </div>
+                <div class="text-gray-300 text-sm" th:text="${moto.problema}">
+                  Problema
+                </div>
+              </div>
+              <form
+                th:if="${moto.echoBeacon != null}"
+                th:action="@{/motos/localizar/{id}(id=${moto.id})}"
+                method="post"
+                style="display: inline;"
+                onsubmit="showLoadingModal()"
+              >
+                <button id="btn-localizar-moto" type="submit" class="text-xs text-black font-bold bg-lime-500 p-1 rounded transition">Localizar Moto</button>
+              </form>
+            </div>
+
+            <!-- Opções de Admin -->
+            <div th:if="${isAdmin}" class="flex gap-2 mt-2 justify-end">
+              <a th:href="@{/motos/editar/{id}(id=${moto.id})}"
+                 class="text-xs bg-blue-600 hover:bg-blue-700 text-white py-1 px-2 rounded transition">
+                Editar
+              </a>
+              <a th:href="@{/motos/excluir/{id}(id=${moto.id})}"
+                 class="text-xs bg-red-600 hover:bg-red-700 text-white py-1 px-2 rounded transition"
+                 onclick="return confirm('Tem certeza que deseja excluir esta moto?')">
+                Excluir
+              </a>
+            </div>
+          </div>
+        </div>
+      </section>
+    </main>
+    <footer
+      class="bg-stone-900 text-white min-h-[17vh] py-8 text-center w-full mt-8"
+    >
+      <div>
+        <p>&copy; 2025 Echobeacon. Todos os direitos reservados.</p>
+      </div>
+    </footer>
+
+    <script>
+      function showLoadingModal() {
+        const modal = document.getElementById('loading_modal');
+        modal.showModal();
+        setTimeout(() => {
+          modal.close();
+        }, 3000);
+      }
+    </script>
+  </body>
+</html>

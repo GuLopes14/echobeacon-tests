@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="pt-br" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8" />
+  <title>Vincular EchoBeacon à Moto</title>
+  <link
+          href="https://cdn.jsdelivr.net/npm/daisyui@5"
+          rel="stylesheet"
+          type="text/css"
+  />
+  <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-stone-950 min-h-screen flex flex-col items-center">
+<header
+        class="fixed top-0 left-0 w-full bg-stone-900 flex flex-wrap justify-around py-4 z-10 shadow"
+>
+  <a
+          href="/home"
+          class="text-lg text-white font-bold hover:text-lime-600 transition"
+  >Início</a>
+  <a
+          href="/motos"
+          class="text-lg text-white font-bold hover:text-lime-500 transition"
+  >Motos</a>
+  <a
+          href="/echobeacon"
+          class="text-lg text-lime-500 font-bold hover:text-lime-500 transition"
+  >Echo Beacons</a>
+  <a
+          href="/profile"
+          class="text-lg text-white font-bold hover:text-lime-500 transition"
+  >Perfil</a>
+</header>
+<main class="w-full max-w-xs mx-auto pt-32 pb-12 flex-grow">
+  <h1 id="titulo-vincular" class="text-2xl font-bold text-white mb-6 text-center">
+    Vincular EchoBeacon à Moto
+  </h1>
+  <form th:action="@{/echobeacon/vincular}" method="post" class="space-y-6">
+    <div>
+      <label class="block text-white text-lg mb-2" for="moto-select">Moto</label>
+      <select
+              class="input input-bordered w-full bg-stone-700 text-white"
+              id="moto-select-empty"
+              name="motoId"
+              th:if="${#lists.isEmpty(motos)}"
+              disabled
+      >
+        <option disabled selected>Nenhuma moto disponível para vincular</option>
+      </select>
+      <select
+              class="input input-bordered w-full bg-stone-700 text-white"
+              id="moto-select"
+              name="motoId"
+              th:unless="${#lists.isEmpty(motos)}"
+      >
+        <option
+                th:each="moto : ${motos}"
+                th:value="${moto.id}"
+                th:text="${moto.placa + ' - ' + moto.modelo}"
+        ></option>
+      </select>
+    </div>
+    <div>
+      <label class="block text-white text-lg mb-2" for="echoBeacon-select">EchoBeacon</label>
+      <select
+              class="input input-bordered w-full bg-stone-700 text-white"
+              id="echoBeacon-select-empty"
+              name="echoBeaconId"
+              th:if="${#lists.isEmpty(echoBeacons)}"
+              disabled
+      >
+        <option disabled selected>Nenhum EchoBeacon disponível para vincular</option>
+      </select>
+      <select
+              class="input input-bordered w-full bg-stone-700 text-white"
+              id="echoBeacon-select"
+              name="echoBeaconId"
+              th:unless="${#lists.isEmpty(echoBeacons)}"
+      >
+        <option
+                th:each="eb : ${echoBeacons}"
+                th:value="${eb.id}"
+                th:text="${eb.numeroIdentificacao}"
+        ></option>
+      </select>
+    </div>
+    <button
+            id="btn-vincular"
+            type="submit"
+            class="btn w-full rounded-full bg-lime-500 text-black font-bold text-lg hover:bg-lime-600 border-none transition"
+    >
+      Vincular
+    </button>
+  </form>
+  <a
+          id="btn-adicionar-echobeacon"
+          href="/echobeacon/novo"
+          class="w-full block mt-6 py-2 rounded-full bg-lime-500 text-black font-bold text-lg hover:bg-lime-600 transition text-center"
+  >
+    Adicionar EchoBeacon
+  </a>
+</main>
+<footer
+        class="bg-stone-900 text-white min-h-[17vh] py-8 text-center w-full mt-8"
+>
+  <div>
+    <p>&copy; 2025 Echobeacon. Todos os direitos reservados.</p>
+  </div>
+</footer>
+</body>
+</html>

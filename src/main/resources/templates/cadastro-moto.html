@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="pt-br" xmlns:th="http://www.thymeleaf.org">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Cadastrar Moto</title>
+    <link
+      href="https://cdn.jsdelivr.net/npm/daisyui@5"
+      rel="stylesheet"
+      type="text/css"
+    />
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link
+      href="https://cdn.jsdelivr.net/npm/daisyui@5/themes.css"
+      rel="stylesheet"
+      type="text/css"
+    />
+  </head>
+  <body class="bg-stone-950 min-h-screen flex flex-col items-center">
+    <header
+      class="fixed top-0 left-0 w-full bg-stone-900 flex justify-around py-4 z-10 shadow"
+    >
+      <a
+        href="/home"
+        class="text-lg text-lime-500 font-bold hover:text-lime-600 transition"
+        >Início</a
+      >
+      <a
+        href="/motos"
+        class="text-lg text-white font-bold hover:text-lime-500 transition"
+        >Motos</a
+      >
+      <a
+        href="/echobeacon"
+        class="text-lg text-white font-bold hover:text-lime-500 transition"
+        >Echo Beacons</a
+      >
+      <a
+        href="/profile"
+        class="text-lg text-white font-bold hover:text-lime-500 transition"
+        >Perfil</a
+      >
+    </header>
+    <main class="w-full max-w-xs mx-auto pt-24 pb-12">
+      <h1 id="titulo-cadastro-moto" class="text-2xl font-bold text-white mb-6 text-center">
+        Cadastro de Moto
+      </h1>
+      <div th:if="${errorMessage}" id="error-message" class="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded relative mb-4" role="alert">
+        <strong class="font-bold">Erro!</strong>
+        <span class="block sm:inline" th:text="${errorMessage}"></span>
+      </div>
+      <form
+        th:action="@{/motos}"
+        th:object="${moto}"
+        method="post"
+        class="space-y-6"
+      >
+        <div>
+          <label class="block text-white text-lg mb-2" for="placa">Placa</label>
+          <input
+                  class="input input-bordered w-full bg-stone-700 text-white placeholder-gray-400"
+                  id="placa"
+                  th:field="*{placa}"
+                  type="text"
+                  placeholder="ABC1234"
+                  required
+          />
+          <div th:if="${#fields.hasErrors('placa')}" class="text-red-500 text-sm mt-1">
+            <span th:errors="*{placa}"></span>
+          </div>
+        </div>
+        <div>
+          <label class="block text-white text-lg mb-2" for="chassi">Chassi</label>
+          <input
+                  class="input input-bordered w-full bg-stone-700 text-white placeholder-gray-400"
+                  id="chassi"
+                  th:field="*{chassi}"
+                  type="text"
+                  placeholder="Chassi"
+                  required
+          />
+          <div th:if="${#fields.hasErrors('chassi')}" class="text-red-500 text-sm mt-1">
+            <span th:errors="*{chassi}"></span>
+          </div>
+        </div>
+        <div>
+          <label class="block text-white text-lg mb-2" for="modelo">Modelo</label>
+          <select
+                  class="input input-bordered w-full bg-stone-700 text-white"
+                  id="modelo"
+                  th:field="*{modelo}"
+          >
+            <option
+                    th:each="m : ${T(br.com.echobeacon.model.enums.Modelo).values()}"
+                    th:value="${m}"
+                    th:text="${m}"
+            ></option>
+          </select>
+          <div th:if="${#fields.hasErrors('modelo')}" class="text-red-500 text-sm mt-1">
+            <span th:errors="*{modelo}"></span>
+          </div>
+        </div>
+        <div>
+          <label class="block text-white text-lg mb-2" for="problema">Problema</label>
+          <input
+                  class="input input-bordered w-full bg-stone-700 text-white placeholder-gray-400"
+                  id="problema"
+                  th:field="*{problema}"
+                  type="text"
+                  placeholder="Descreva o problema"
+                  required
+          />
+          <div th:if="${#fields.hasErrors('problema')}" class="text-red-500 text-sm mt-1">
+            <span th:errors="*{problema}"></span>
+          </div>
+        </div>
+        <button
+          id="btn-cadastrar-moto"
+          type="submit"
+          class="btn w-full rounded-full bg-lime-500 text-black font-bold text-lg hover:bg-lime-600 border-none transition"
+        >
+          Cadastrar
+        </button>
+      </form>
+    </main>
+  </body>
+</html>

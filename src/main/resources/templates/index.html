@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <title>Home - Echobeacon</title>
+    <link href="https://cdn.jsdelivr.net/npm/daisyui@5" rel="stylesheet" type="text/css" />
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+    <link href="https://cdn.jsdelivr.net/npm/daisyui@5/themes.css" rel="stylesheet" type="text/css" />
+</head>
+<body class="bg-stone-950 min-h-screen">
+    <header class="fixed top-0 left-0 w-full bg-stone-900 flex justify-around py-4 z-10 shadow">
+        <a href="/home" class="text-lg text-lime-500 font-bold hover:text-lime-600 transition">Início</a>
+        <a href="/motos" class="text-lg text-white font-bold hover:text-lime-500 transition">Motos</a>
+         <a href="/echobeacon" class="text-lg text-white font-bold hover:text-lime-500 transition">Echo Beacons</a>
+        <a href="/profile" class="text-lg text-white font-bold hover:text-lime-500 transition">Perfil</a>
+    </header>
+    <main class="flex flex-col items-center justify-center min-h-[80vh] pt-24">
+        <h1 id="titulo-principal" class="mb-10 text-3xl font-bold tracking-wide text-white">ECHOBEACON</h1>
+        <div class="mb-10 text-lg text-gray-400" th:text="${currentTime}">10:31 AM</div>
+        <a id="btn-visualizar-motos" href="/motos" class="mb-10 px-10 py-4 rounded-full bg-lime-500 text-black font-bold text-lg shadow hover:bg-lime-600 transition">VISUALIZAR MOTOS</a>
+    </main>
+    <footer class="bg-stone-900 text-white min-h-[17vh] py-8 text-center absolute inset-x-0 bottom-0">
+        <div>
+            <p>&copy; 2025 Echobeacon. Todos os direitos reservados.</p>
+        </div>
+    </footer>
+</body>
+</html>

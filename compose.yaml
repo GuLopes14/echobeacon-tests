@@ -1,0 +1,9 @@
+services:
+  postgres:
+    image: 'postgres:latest'
+    environment:
+      - 'POSTGRES_DB=echobeacon'
+      - 'POSTGRES_PASSWORD=echobeacon'
+      - 'POSTGRES_USER=echobeacon'
+    ports:
+      - '5432:5432'

@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="pt-br" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8" />
+  <title>Editar Moto</title>
+  <link
+    href="https://cdn.jsdelivr.net/npm/daisyui@5"
+    rel="stylesheet"
+    type="text/css"
+  />
+  <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-stone-950 min-h-screen flex flex-col items-center">
+  <header
+    class="fixed top-0 left-0 w-full bg-stone-900 flex flex-wrap justify-around py-4 z-10 shadow"
+  >
+    <a
+      href="/home"
+      class="text-lg text-white font-bold hover:text-lime-600 transition"
+      >Início</a
+    >
+    <a
+      href="/motos"
+      class="text-lg text-lime-500 font-bold hover:text-lime-500 transition"
+      >Motos</a
+    >
+    <a
+      href="/echobeacon"
+      class="text-lg text-white font-bold hover:text-lime-500 transition"
+      >Echo Beacons</a
+    >
+    <a
+      href="/profile"
+      class="text-lg text-white font-bold hover:text-lime-500 transition"
+      >Perfil</a
+    >
+  </header>
+
+  <main class="w-full max-w-xs mx-auto pt-32 pb-12 flex-grow">
+    <h1 class="text-2xl font-bold text-white mb-6 text-center">
+      Editar Moto
+    </h1>
+
+    <form th:action="@{/motos/editar/{id}(id=${moto.id})}" method="post" class="space-y-6" th:object="${moto}">
+      <div th:if="${errorMessage}" class="text-red-500 text-center mb-4">
+        <span th:text="${errorMessage}"></span>
+      </div>
+      <input type="hidden" th:field="*{id}" />
+
+      <div>
+        <label for="placa" class="block text-white text-lg mb-2">Placa</label>
+        <input
+          type="text"
+          id="placa"
+          th:field="*{placa}"
+          class="input input-bordered w-full bg-stone-700 text-white"
+          required
+        />
+      </div>
+
+      <div>
+        <label for="chassi" class="block text-white text-lg mb-2">Chassi</label>
+        <input
+          type="text"
+          id="chassi"
+          th:field="*{chassi}"
+          class="input input-bordered w-full bg-stone-700 text-white"
+          required
+        />
+      </div>
+
+      <div>
+        <label for="modelo" class="block text-white text-lg mb-2">Modelo</label>
+        <select
+          id="modelo"
+          th:field="*{modelo}"
+          class="input input-bordered w-full bg-stone-700 text-white"
+          required
+        >
+          <option value="MOTTU_POP">MOTTU POP</option>
+          <option value="MOTTU_SPORT">MOTTU SPORT</option>
+          <option value="MOTTU_E">MOTTU E</option>
+        </select>
+      </div>
+
+      <div>
+        <label for="problema" class="block text-white text-lg mb-2">Problema</label>
+        <textarea
+          id="problema"
+          th:field="*{problema}"
+          class="textarea textarea-bordered w-full bg-stone-700 text-white"
+          required
+        ></textarea>
+      </div>
+
+      <button
+        type="submit"
+        class="btn w-full rounded-full bg-lime-500 text-black font-bold text-lg hover:bg-lime-600 border-none transition"
+      >
+        Salvar Alterações
+      </button>
+    </form>
+
+    <a
+      href="/motos"
+      class="w-full block mt-6 py-2 rounded-full bg-stone-700 text-white font-bold text-lg hover:bg-stone-600 transition text-center"
+    >
+      Cancelar
+    </a>
+  </main>
+
+  <footer
+    class="bg-stone-900 text-white min-h-[17vh] py-8 text-center w-full mt-8"
+  >
+    <div>
+      <p>&copy; 2025 Echobeacon. Todos os direitos reservados.</p>
+    </div>
+  </footer>
+</body>
+</html>
