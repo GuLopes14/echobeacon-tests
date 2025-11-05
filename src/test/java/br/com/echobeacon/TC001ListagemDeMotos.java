@@ -5,7 +5,7 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 
-public class ListagemDeMotosTest {
+public class TC001ListagemDeMotos {
 
     // Cenário 1: Acessar página de motos
     @Test

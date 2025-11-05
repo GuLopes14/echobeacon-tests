@@ -6,7 +6,7 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.support.ui.Select;
 
-public class CadastroEchoBeaconTest {
+public class TC003CadastroEchoBeacon {
 
     // Cenário 1: Cadastro com sucesso
     @Test

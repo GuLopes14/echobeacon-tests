@@ -6,7 +6,7 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.support.ui.Select;
 
-public class CadastroMotoTest {
+public class TC002CadastroMoto {
 
     // Cenário 1: Cadastro com sucesso
     @Test

@@ -7,7 +7,7 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.support.ui.Select;
 
-public class VincularEchoBeaconTest {
+public class TC004VincularEchoBeacon {
 
     // Cenário 1: Vinculação com sucesso (quando há dados)
     @Test
